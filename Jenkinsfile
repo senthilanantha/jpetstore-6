@@ -1,23 +1,14 @@
 pipeline {
-  agent any
+  agent {
+    node {
+      label 'test'
+    }
+
+  }
   stages {
     stage('Build') {
-      parallel {
-        stage('Build') {
-          steps {
-            sh './mvnw clean compile'
-          }
-        }
-
-        stage('Build Test') {
-          steps {
-            node(label: 'test') {
-              sh './mvnw clean compile'
-            }
-
-          }
-        }
-
+      steps {
+        sh './mvnw clean compile'
       }
     }
 
@@ -46,10 +37,7 @@ pipeline {
 
     stage('Integration Test') {
       steps {
-        node(label: 'test') {
-          sh './mvnw verify -P tomcat90'
-        }
-
+        sh './mvnw verify -P tomcat90'
       }
     }
 
