@@ -2,8 +2,19 @@ pipeline {
   agent any
   stages {
     stage('Build') {
-      steps {
-        sh './mvnw clean compile'
+      parallel {
+        stage('Build') {
+          steps {
+            sh './mvnw clean compile'
+          }
+        }
+
+        stage('Build Test') {
+          steps {
+            sh './mvnw clean compile'
+          }
+        }
+
       }
     }
 
