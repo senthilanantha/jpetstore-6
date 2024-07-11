@@ -11,7 +11,10 @@ pipeline {
 
         stage('Build Test') {
           steps {
-            sh './mvnw clean compile'
+            node(label: 'test') {
+              sh './mvnw clean compile'
+            }
+
           }
         }
 
